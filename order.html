@@ -1,0 +1,54 @@
+<!-- order.html -->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>รายละเอียดสินค้า</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🛒 รายละเอียดสินค้า</h1>
+  <div id="product-detail"></div>
+  <button onclick="window.history.back()">🔙 ย้อนกลับ</button>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    const price = params.get('price');
+
+    if (name && price) {
+      document.getElementById('product-detail').innerHTML = `
+        <h2>${name}</h2>
+        <p>ราคา: ${price} บาท</p>
+        <form id="orderForm">
+          <input type="email" name="gmail" placeholder="กรอก Gmail" required><br><br>
+          <input type="file" name="slip" accept="image/*" required><br><br>
+          <input type="hidden" name="product" value="${name}">
+          <input type="hidden" name="price" value="${price}">
+          <button type="submit">📤 ส่งคำสั่งซื้อ</button>
+        </form>
+      `;
+    }
+
+    document.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = document.getElementById('orderForm');
+      const formData = new FormData(form);
+
+      try {
+        const res = await fetch('https://your-project-name.username.repl.co/order', {
+          method: 'POST',
+          body: formData
+        });
+
+        const text = await res.text();
+        alert('✅ ส่งคำสั่งซื้อเรียบร้อยแล้ว!');
+        window.location.href = 'index.html';
+      } catch (err) {
+        alert('❌ ส่งคำสั่งซื้อไม่สำเร็จ');
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
