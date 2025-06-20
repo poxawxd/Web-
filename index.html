@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ร้านค้าออนไลน์</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+  <body>
+    <h1>Secret Shop</h1>
+
+    <div id="product-container">
+      <!-- สินค้าจะถูกโหลดจาก products.html -->
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+      // โหลด products.html และใส่ใน product-container
+      fetch('products.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('product-container').innerHTML = html;
+        });
+    </script>
+  </body>
